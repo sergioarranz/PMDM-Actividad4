@@ -1,0 +1,3 @@
+//include ':app', ':miapp2'
+include ':mylib', ':entrega2'
+//include  ':mylib', ':entrega2'

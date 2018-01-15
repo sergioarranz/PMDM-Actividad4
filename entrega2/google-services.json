@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "833759034832",
+    "firebase_url": "https://actividadesandroid.firebaseio.com",
+    "project_id": "actividadesandroid",
+    "storage_bucket": "actividadesandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833759034832:android:a8270227a92b1554",
+        "android_client_info": {
+          "package_name": "com.example.entrega2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833759034832-lf7abgrln7s3nejon3ht8ql4igem2ais.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNc4jx9PgTILMIV7-B0anczs43ctW1254"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

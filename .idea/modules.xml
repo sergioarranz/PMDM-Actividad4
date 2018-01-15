@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/4yony4-dampmiapp2-0a83372034f1.iml" filepath="$PROJECT_DIR$/4yony4-dampmiapp2-0a83372034f1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidDecPrj.iml" filepath="$PROJECT_DIR$/AndroidDecPrj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entrega2/entrega2.iml" filepath="$PROJECT_DIR$/entrega2/entrega2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mylib/mylib.iml" filepath="$PROJECT_DIR$/mylib/mylib.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">myLib</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lblEmail">Email</string>
+    <string name="lblPass">Pass</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnRegistrar">Register</string>
+</resources>
