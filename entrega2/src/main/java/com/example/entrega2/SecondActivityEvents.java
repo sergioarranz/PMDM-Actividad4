@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -86,16 +87,27 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
         basta con usar un if/else
          */
         if(branch.equals("Coches")){
-            System.out.println("ldentro : " + branch);
             //Tenemos que usar un GenericTypeIndicator dado que firebase devuelve los datos utlizando esta clase abstracta
             GenericTypeIndicator<ArrayList<Coche>> indicator = new GenericTypeIndicator<ArrayList<Coche>>(){};
             arrCoches = dataSnapshot.getValue(indicator);//desde el value podemos castearlo al tipo que queramos, en este caso lo casteamos al genericTypeIndicator
            ListAdapter listAdapter = new ListAdapter(arrCoches,this.getSecondActivity());
             this.secondActivity.getListFragment().getMyLista().setAdapter(listAdapter);
             listAdapter.setListAdapterListener(this);
+            AgregarPinesCoches();
 
         }
 
+    }
+
+    public void AgregarPinesCoches(){
+    for (int i=0;i<arrCoches.size();i++){
+        Coche cocheTemp = arrCoches.get(i);
+        LatLng cochePos = new LatLng(cocheTemp.lat, cocheTemp.lon);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(cochePos);
+        markerOptions.title(cocheTemp.modelo);
+        if(mMap!=null)mMap.addMarker(markerOptions);
+        }
     }
 
     @Override
@@ -115,7 +127,6 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
