@@ -16,6 +16,11 @@ import com.example.entrega2.firebase.FirebaseAdminListener;
 import com.example.mylib.fragment.ListFragment;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,9 +33,11 @@ import java.util.ArrayList;
  * Created by tay on 25/11/17.
  */
 
-public class SecondActivityEvents implements View.OnClickListener, FirebaseAdminListener,ListAdapterListener {
+public class SecondActivityEvents implements View.OnClickListener, FirebaseAdminListener,ListAdapterListener,OnMapReadyCallback {
 
     private SecondActivity secondActivity;
+    GoogleMap mMap;
+    public ArrayList<Coche> arrCoches;
 
     public SecondActivityEvents(SecondActivity secondActivity) {
         this.secondActivity = secondActivity;
@@ -47,11 +54,7 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnLogOut) {
-            System.out.println(DataHolder.MyDataHolder.getFirebaseAdmin().getmAuth());
-            DataHolder.MyDataHolder.getFirebaseAdmin().logOut();
 
-        }
     }
 
     @Override
@@ -86,7 +89,7 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
             System.out.println("ldentro : " + branch);
             //Tenemos que usar un GenericTypeIndicator dado que firebase devuelve los datos utlizando esta clase abstracta
             GenericTypeIndicator<ArrayList<Coche>> indicator = new GenericTypeIndicator<ArrayList<Coche>>(){};
-            ArrayList<Coche> arrCoches = dataSnapshot.getValue(indicator);//desde el value podemos castearlo al tipo que queramos, en este caso lo casteamos al genericTypeIndicator
+            arrCoches = dataSnapshot.getValue(indicator);//desde el value podemos castearlo al tipo que queramos, en este caso lo casteamos al genericTypeIndicator
            ListAdapter listAdapter = new ListAdapter(arrCoches,this.getSecondActivity());
             this.secondActivity.getListFragment().getMyLista().setAdapter(listAdapter);
             listAdapter.setListAdapterListener(this);
@@ -105,5 +108,18 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
         ImageView imageView = cell.getImageViewCoche();
         imageView.setLayoutParams(layoutParams);
         */
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        //LatLng sydney = new LatLng(-34, 151);
+        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        DataHolder.MyDataHolder.getFirebaseAdmin().downloadDataAndObserveBranchChanges("Coches"); // llamo al métood de descarga con la rama que quiero que observe a partir de la raíz.
+
     }
 }
