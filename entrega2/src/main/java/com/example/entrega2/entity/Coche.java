@@ -1,5 +1,6 @@
 package com.example.entrega2.entity;
 
+import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
@@ -14,6 +15,8 @@ public class Coche {
     public String urlImg;
     public double lat;
     public double lon;
+    // Fuera de Firebase
+    private Marker marker=null;
 
     public Coche() {
     }
@@ -25,5 +28,13 @@ public class Coche {
         this.urlImg = urlImg;
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public void setMarker(Marker marker){
+        this.marker = marker;
+    }
+
+    public Marker getMarker(){
+        return marker;
     }
 }

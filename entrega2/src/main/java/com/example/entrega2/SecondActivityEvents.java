@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  * Created by tay on 25/11/17.
  */
 
-public class SecondActivityEvents implements View.OnClickListener, FirebaseAdminListener,ListAdapterListener,OnMapReadyCallback {
+public class SecondActivityEvents implements View.OnClickListener, FirebaseAdminListener,ListAdapterListener,OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
 
     private SecondActivity secondActivity;
     GoogleMap mMap;
@@ -106,7 +107,12 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(cochePos);
         markerOptions.title(cocheTemp.modelo);
-        if(mMap!=null)mMap.addMarker(markerOptions);
+            if(mMap!=null){
+                Marker marker = mMap.addMarker(markerOptions);
+                marker.setTag(cocheTemp);
+                cocheTemp.setMarker(marker);
+                if (i==0)mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cochePos, 14));
+            }
         }
     }
 
@@ -125,12 +131,19 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        mMap.setOnMarkerClickListener(this);
         // Add a marker in Sydney and move the camera
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         DataHolder.MyDataHolder.getFirebaseAdmin().downloadDataAndObserveBranchChanges("Coches"); // llamo al métood de descarga con la rama que quiero que observe a partir de la raíz.
 
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Coche coche = (Coche)marker.getTag();
+        Log.v("SecondActivity","PRESIONADO PIN: "+coche.modelo);
+        return false;
     }
 }
