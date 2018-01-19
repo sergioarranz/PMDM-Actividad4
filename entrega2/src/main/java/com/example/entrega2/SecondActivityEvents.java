@@ -3,6 +3,7 @@ package com.example.entrega2;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -88,6 +89,7 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
         basta con usar un if/else
          */
         if(branch.equals("Coches")){
+            quitarViejosPines();
             //Tenemos que usar un GenericTypeIndicator dado que firebase devuelve los datos utlizando esta clase abstracta
             GenericTypeIndicator<ArrayList<Coche>> indicator = new GenericTypeIndicator<ArrayList<Coche>>(){};
             arrCoches = dataSnapshot.getValue(indicator);//desde el value podemos castearlo al tipo que queramos, en este caso lo casteamos al genericTypeIndicator
@@ -98,6 +100,17 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
 
         }
 
+    }
+
+    public void quitarViejosPines() {
+        if (arrCoches!=null) {
+            for (int i = 0; i < arrCoches.size(); i++) {
+                Coche cocheTemp = arrCoches.get(i);
+                if (cocheTemp.getMarker() != null) {
+                    cocheTemp.getMarker().remove();
+                }
+            }
+        }
     }
 
     public void AgregarPinesCoches(){
@@ -111,7 +124,7 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
                 Marker marker = mMap.addMarker(markerOptions);
                 marker.setTag(cocheTemp);
                 cocheTemp.setMarker(marker);
-                if (i==0)mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cochePos, 14));
+                if (i==0)mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cochePos, 7));
             }
         }
     }
@@ -144,6 +157,15 @@ public class SecondActivityEvents implements View.OnClickListener, FirebaseAdmin
     public boolean onMarkerClick(Marker marker) {
         Coche coche = (Coche)marker.getTag();
         Log.v("SecondActivity","PRESIONADO PIN: "+coche.modelo);
+
+        secondActivity.detallesFragment.txtFabricado.setText(coche.Fabricado+"");
+        secondActivity.detallesFragment.txtMarca.setText(coche.marca);
+        secondActivity.detallesFragment.txtModelo.setText(coche.modelo);
+
+        FragmentTransaction transaction = secondActivity.getSupportFragmentManager().beginTransaction();
+        transaction.show(secondActivity.detallesFragment);
+        transaction.commit(); // comiteamos
+
         return false;
     }
 }

@@ -3,22 +3,16 @@ package com.example.entrega2;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.entrega2.adapter.ListAdapter;
-import com.example.entrega2.entity.Coche;
-import com.example.entrega2.firebase.FirebaseAdmin;
+import com.example.mylib.fragment.DetallesFragment;
 import com.example.mylib.fragment.ListFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 
-import java.util.ArrayList;
-
 public class SecondActivity extends AppCompatActivity {
-    private SecondActivityEvents events;
-    private ListFragment listFragment;
-    private SupportMapFragment mapFragment;
+    SecondActivityEvents events;
+    ListFragment listFragment;
+    SupportMapFragment mapFragment;
+    DetallesFragment detallesFragment;
     //private LinearLayout llContainer;
 
 
@@ -38,6 +32,7 @@ public class SecondActivity extends AppCompatActivity {
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMapa);
         mapFragment.getMapAsync(events);
+        detallesFragment = (DetallesFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMapDetail);
         /*
         Para añadir de forma dinámica fragments a un layout y luego trabajar con ellos para poder destruirlos
         si queremos o conservarlos vamos a realizar los siguientes pasos:
@@ -53,6 +48,7 @@ public class SecondActivity extends AppCompatActivity {
         //Con la operación add especificamos el contenedor donde queremos meter el fragment, el fragment que queremos meter y un identificador para es fragment
         //transaction.add(this.getLlContainer().getId(), this.getListFragment(), "fragmentList");
         transaction.hide(listFragment);
+        transaction.hide(detallesFragment);
         transaction.show(mapFragment);
         transaction.commit(); // comiteamos
     /*
